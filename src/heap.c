@@ -48,6 +48,9 @@ size_t heap_free (void * ptr) {
 	
 	size_t i;
 	for (i = 0; i < usedHead->len; i++) {
+		// Once we found the block with the correct pointer, move the
+		// node over to the freeBlock list and link the block's next pointer
+		// to the previous block's.
 		if (curNode->ptr == ptr) {
 			addNode (freeHead, ptr, curNode->size);
 			if (i != 0) nodeAt (usedHead, i - 1)->next = curNode->next;
@@ -55,6 +58,8 @@ size_t heap_free (void * ptr) {
 		}
 		curNode = curNode->next;
 	}
+	// If the pointer given doesn't match any known allocated
+	// blocks then return failure.
 	return 1;
 }
 

@@ -2,6 +2,7 @@
 #define heap_h
 
 #include <stdint.h>
+#include <stddef.h>
 
 #include "heapBlock.h"
 
