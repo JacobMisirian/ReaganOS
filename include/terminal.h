@@ -1,12 +1,12 @@
 #ifndef terminal_h
 #define terminal_h
 
-#include <stddef.h>
-#include <stdint.h>
-
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
 #define TAB_LENGTH 4
+
+#include <stddef.h>
+#include <stdint.h>
 
 void terminal_cls ();
 void terminal_clsColor (uint8_t color);

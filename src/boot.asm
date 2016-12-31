@@ -51,3 +51,9 @@ _gdt_flush:
     jmp 0x08:flush2
 flush2:
     ret
+global idt_load
+extern ip
+idt_load:
+    lidt [ip]
+    ret
+		

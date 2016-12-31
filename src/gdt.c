@@ -15,7 +15,7 @@ static void gdt_setGate (size_t index, unsigned long base, unsigned long limit, 
 }
 
 void gdt_init () {
-	gp.limit = (sizeof (struct gdt_entry) * GDT_ENTRIES) - 1;
+	gp.limit = (sizeof (struct gdtEntry) * GDT_ENTRIES) - 1;
 	gp.base = &gdt;
 	
 	gdt_setGate (0, 0, 0, 0, 0);
