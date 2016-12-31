@@ -4,6 +4,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define VGA_WIDTH 80
+#define VGA_HEIGHT 25
+#define TAB_LENGTH 4
+
 typedef enum {
         VGA_COLOR_BLACK = 0,
         VGA_COLOR_BLUE = 1,
@@ -28,7 +32,8 @@ void terminal_clsColor (uint8_t color);
 void terminal_init ();
 void terminal_writeChar (char c);
 void terminal_writeCharAt (char c, uint8_t color, size_t x, size_t y);
-void terminal_writeString (const char* str);
+void terminal_writeStr (const char * str);
+void terminal_writeStrLn (const char * str);
 
 static inline uint8_t getVgaColor (vga_color fg, vga_color bg) {
 	return fg | bg << 4;

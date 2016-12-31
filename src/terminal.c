@@ -3,8 +3,7 @@
 
 #include "terminal.h"
 
-static const size_t VGA_WIDTH = 80;
-static const size_t VGA_HEIGHT = 25;
+
 
 size_t terminal_row;
 size_t terminal_column;
@@ -40,18 +39,33 @@ void terminal_writeCharAt (char c, uint8_t color, size_t x, size_t y) {
 }
 
 void terminal_writeChar (char c) {
-	terminal_writeCharAt (c, terminal_color, terminal_column, terminal_row);
-	if (++terminal_column == VGA_WIDTH) {
-		terminal_column = 0;
-		if (++terminal_row == VGA_HEIGHT) {
-			terminal_row = 0;
-		}
+	switch (c) {
+		case '\n':
+			terminal_row++;
+			terminal_column = 0;
+			break;
+		case '\t':
+			for (size_t i = 0; i < TAB_LENGTH; i++) terminal_writeChar (' ');
+			break;
+		default:
+			terminal_writeCharAt (c, terminal_color, terminal_column, terminal_row);
+			if (++terminal_column == VGA_WIDTH) {
+				terminal_column = 0;
+				if (++terminal_row == VGA_HEIGHT) {
+					terminal_row = 0;
+				}
+			}
+			break;
 	}
 }
 
-void terminal_writeStr(const char* str) {
+void terminal_writeStr(const char * str) {
 	size_t pos = 0;
 	while (str [pos] != 0)
 		terminal_writeChar (str [pos++]);
 }
 
+void terminal_writeStrLn(const char * str) {
+	terminal_writeStr (str);
+	terminal_writeChar ('\n');
+}

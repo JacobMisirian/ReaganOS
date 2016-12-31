@@ -17,7 +17,7 @@ static node_t * nodeAt (node_t * head, size_t index) {
 	return curNode;
 }
 
-void * heap_internalAlloc (size_t bytes) {
+static void * heap_internalAlloc (size_t bytes) {
 	void * pointer = nextPtr;
 	nextPtr += bytes;
 	return pointer;
@@ -43,7 +43,7 @@ void heap_init () {
 	usedHead->len = 1;
 }
 
-void size_t heap_free (void * ptr) {
+size_t heap_free (void * ptr) {
 	node_t * curNode = usedHead;
 	
 	size_t i;
@@ -83,4 +83,5 @@ void * heap_alloc (size_t bytes) {
 	}
 	
 	addNode (usedHead, ptr, bytes);
+	return ptr;
 }
