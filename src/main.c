@@ -17,7 +17,6 @@ int main (void *multibootinfo) {
 	str [3] = 0;
 	
 	terminal_writeStrLn ("Hello, World! From ReaganOS\n");
-	terminal_writeStrLn (itoa (strcmp ("hello", "hello"), str, 10));
-	terminal_writeStrLn (itoa (strcmp ("hello", "hellp"), str, 10));
-	terminal_writeStrLn (itoa (strcmp ("hello", "helln"), str, 10));
+	terminal_writeStrLn (strcat ("Hello, ", "world!"));
+	terminal_writeStrLn (itoa (5 / 0, str, 0));
 }

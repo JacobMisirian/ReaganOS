@@ -9,13 +9,19 @@ size_t strlen (const char * str) {
 	return res - 1;
 }
 
-int strcmp (const char * s1, const char * s2) {
-	size_t len1 = strlen (s1);
-	size_t len2 = strlen (s2);
-	
-	size_t len = len1 > len2 ? len2 : len1;
+char * strcat (char * str1, const char * str2) {
+	size_t len = strlen (str1);
 	size_t i;
-	for (i = 0; i < len; i++) {
+	for (i = 0; str2 [i] != 0; i++) {
+		str1 [len + i] = str2 [i];
+	}
+	str1 [len + i + 1] = 0;
+	return str1;
+}
+
+int strcmp (const char * s1, const char * s2) {
+	size_t i;
+	for (i = 0; s1 [i] != 0 && s2 [i] != 0; i++) {
 		if (s1 [i] != s2 [i]) {
 			return s1 [i] < s2 [i] ? -1 : 1;
 		}
@@ -23,6 +29,14 @@ int strcmp (const char * s1, const char * s2) {
 	return 0;
 }
 
+char * strcpy (const char * str, char * dest) {
+	size_t i;
+	for (i = 0; str [i] != 0; i++) {
+		dest [i] = str [i];
+	}
+	dest [i + 1] = 0;
+	return dest;
+}
 
 char * strrev (char * str) {
 	size_t len = strlen (str);
@@ -68,10 +82,28 @@ char * itoa(int num, char * out, int base) {
     return out;
 }
 
-int indexOf (const char * str, unsigned char c) {
-	int len = strlen (str);
+int strchr (const char * str, unsigned char c) {
 	int i;
-	for (i = 0; i < len; i++) {
+	for (i = 0; str [i] != 0; i++) {
+		if (str [i] == c) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+char * substr (const char * str, size_t startIndex, size_t endIndex, char * out) {
+	size_t i = 0;
+	while (startIndex < endIndex) {
+		out [i++] = str [startIndex++];
+	}
+	out [i] = 0;
+	return out;
+}
+
+int strrchr (const char * str, unsigned char c) {
+	int i;
+	for (i = strlen (str) - 1; i >= 0; i--) {
 		if (str [i] == c) {
 			return i;
 		}
