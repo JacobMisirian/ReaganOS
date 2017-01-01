@@ -1,10 +1,11 @@
 #include <stddef.h>
+#include <stdint.h>
 
 #include "idt.h"
 #include "idtRegister.h"
 #include "string.h"
 
-static void idt_setGate (size_t index, unsigned long base, unsigned short sel, unsigned char flags) {
+void idt_setGate (size_t index, unsigned long base, unsigned short sel, unsigned char flags) {
 	idt [index].lowBase = base & 0xFFFF;
 	idt [index].highBase = (base >> 16) & 0xFFFF;
 	idt [index].sel = sel;
@@ -13,8 +14,9 @@ static void idt_setGate (size_t index, unsigned long base, unsigned short sel, u
 }
 
 void idt_init () {
-	ip.limit = (sizeof (struct idtEntry) * IDT_ENTRIES) - 1;
-	ip.base = &idt;
+	struct idtPtr iPtr;
+	iPtr.limit = (sizeof (struct idtEntry) * IDT_ENTRIES) - 1;
+	iPtr.base = &idt;
 	
 	memset (0, &idt, sizeof(struct idtEntry) * IDT_ENTRIES);
 	
@@ -51,13 +53,10 @@ void idt_init () {
     idt_setGate(30, (unsigned)isr30, 0x08, 0x8E);
     idt_setGate(31, (unsigned)isr31, 0x08, 0x8E);
 	
-	idt_load ();
+	asm volatile ("lidt (%0)" : : "p" (&iPtr));
 }
 
-void fault_handler(idtRegister_t *r) {
-    if (r->int_no < 32) {
-		terminal_writeChar('\n');
-        //terminal_writeStrLn (exceptionMessages[r->int_no]);
-        //for (;;);
-    }
+void fault_handler(idtRegister_t * r) {
+	terminal_writeStrLn ("TRIGGERED");
+	while (1);
 }

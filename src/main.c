@@ -1,13 +1,15 @@
 #include "gdt.h"
 #include "heap.h"
 #include "idt.h"
+#include "irq.h"
 #include "string.h"
 #include "terminal.h"
 
 int main (void *multibootinfo) {
 	heap_init ();
-	idt_init ();
 	gdt_init ();
+	idt_init ();
+	irq_init ();
 	terminal_init ();
 	
 	char * str = heap_alloc (50);
@@ -18,5 +20,5 @@ int main (void *multibootinfo) {
 	
 	terminal_writeStrLn ("Hello, World! From ReaganOS\n");
 	terminal_writeStrLn (strcat ("Hello, ", "world!"));
-	terminal_writeStrLn (itoa (5 / 0, str, 0));
+	terminal_writeStrLn (itoa (5 / 0, str, 10));
 }

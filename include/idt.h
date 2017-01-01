@@ -18,10 +18,9 @@ typedef struct idtPtr {
     unsigned int base;
 } __attribute__((packed));
 
-struct idtEntry idt [IDT_ENTRIES];
-struct idtPtr ip;
+void idt_setGate (size_t index, unsigned long base, unsigned short sel, unsigned char flags);
 
-extern void idt_load ();
+struct idtEntry idt [IDT_ENTRIES];
 
 extern void isr0();
 extern void isr1();
