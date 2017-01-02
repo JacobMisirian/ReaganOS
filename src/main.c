@@ -1,11 +1,12 @@
-#include "gdt.h"
-#include "heap.h"
-#include "idt.h"
-#include "irq.h"
-#include "string.h"
-#include "terminal.h"
+#include <arch/i386/gdt.h>
+#include <arch/i386/idt.h>
+#include <arch/i386/terminal.h>
+#include <io/irq.h>
+#include <lib/string.h>
+#include <mm/heap.h>
 
 int main (void *multibootinfo) {
+	irq_remap ();
 	heap_init ();
 	gdt_init ();
 	idt_init ();
@@ -20,5 +21,6 @@ int main (void *multibootinfo) {
 	
 	terminal_writeStrLn ("Hello, World! From ReaganOS\n");
 	terminal_writeStrLn (strcat ("Hello, ", "world!"));
-	terminal_writeStrLn (itoa (5 / 0, str, 10));
+	int x = 2 - 2;
+	terminal_writeStrLn (itoa (5 / x, str, 10));
 }
