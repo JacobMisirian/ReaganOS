@@ -4,6 +4,7 @@
 #include <io/irq.h>
 #include <lib/string.h>
 #include <mm/heap.h>
+#include <arch/device.h>
 
 int main (void *multibootinfo) {
 	irq_remap ();
