@@ -14,7 +14,7 @@ device_t * device_add (const char * name) {
 	if (headDevice == 0) {
 		headDevice = dev;
 	} else {
-		device_t temp = headDevice;
+		device_t * temp = headDevice;
 		while (temp->next != 0) {
 			temp = temp->next;
 		}

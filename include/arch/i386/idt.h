@@ -4,6 +4,7 @@
 #define IDT_ENTRIES 256
 
 #include <stddef.h>
+#include <stdint.h>
 
 typedef struct idtEntry {
 	unsigned short lowBase;

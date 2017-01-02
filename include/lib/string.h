@@ -1,6 +1,7 @@
 #ifndef string_h
 #define string_h
 
+int atoi (const char * str);
 char * itoa(int num, char * out, int base);
 void * memset (unsigned char b, void * ptr, size_t len);
 char * strcat (char * str1, const char * str2);

@@ -5,6 +5,29 @@
 #include <arch/i386/registers.h>
 #include <lib/string.h>
 
+char * exceptionMessages [] = {
+	"Divide by zero",
+	"Debug",
+	"Non maskable interrupt",
+	"Breakpoint",
+	"Into detected overflow",
+	"Out of bounds",
+	"Invalid opcode",
+	"No coprocessor",
+	"Double fault",
+	"Coprocessor segment overrun",
+	"Bad TSS",
+	"Segment not present",
+	"Stack fault",
+	"General protection fault",
+	"Page fault",
+	"Unknown interrupt",
+	"Coprocessor fault",
+	"Alignment check",
+	"Machine check",
+	"Unknown"
+};
+
 void idt_setGate (size_t index, unsigned long base, unsigned short sel, unsigned char flags) {
 	idt [index].lowBase = base & 0xFFFF;
 	idt [index].highBase = (base >> 16) & 0xFFFF;
@@ -57,6 +80,9 @@ void idt_init () {
 }
 
 void fault_handler(registers_t * r) {
-	terminal_writeStrLn ("TRIGGERED");
+	if (r->num < 32) {
+		terminal_writeStr ("Kernel Panic! Exception type: ");
+		terminal_writeStrLn (exceptionMessages [r->num]);
+	}
 	while (1);
 }

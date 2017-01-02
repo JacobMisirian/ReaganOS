@@ -82,6 +82,23 @@ char * itoa(int num, char * out, int base) {
     return out;
 }
 
+int atoi (const char * str) {
+	int res = 0;
+	int mul = 1;
+	size_t i = 0;
+	
+	if (str [0] == '-') {
+		mul = -1;
+		i = 1;
+	}
+	
+	while (str [i] != 0) {
+		res = res * 10 + str [i++] - '0';
+	}
+	
+	return res * mul;
+}
+
 int strchr (const char * str, unsigned char c) {
 	int i;
 	for (i = 0; str [i] != 0; i++) {

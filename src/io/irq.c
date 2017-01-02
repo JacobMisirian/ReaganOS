@@ -16,8 +16,8 @@ void irq_setHandler (size_t num, void (* handler)(registers_t * r)) {
 }
 
 void irq_init () {
-	irq_remap ();
-
+	//irq_remap ();
+	asm volatile ("sti");
 	idt_setGate (32, (unsigned)irq0, 0x08, 0x8E);
 	idt_setGate (33, (unsigned)irq1, 0x08, 0x8E);
 	idt_setGate (34, (unsigned)irq2, 0x08, 0x8E);
