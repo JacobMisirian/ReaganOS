@@ -2,8 +2,9 @@
 #include <arch/pit.h>
 #include <arch/i386/gdt.h>
 #include <arch/i386/idt.h>
-#include <arch/i386/terminal.h>
+#include <arch/i386/textscreen.h>
 #include <drivers/keyboard.h>
+#include <drivers/terminal.h>
 #include <io/irq.h>
 #include <lib/input.h>
 #include <lib/string.h>
@@ -15,16 +16,16 @@ int main (void *multibootinfo) {
 	gdt_init ();
 	idt_init ();
 	irq_init ();
-	terminal_init ();
+	textscreen_init ();
 	pit_init (100);
 	keyboard_init ();
-	char * temp [10];
+	input_init ("keyboard");
 	
-	terminal_writeStrLn ("Hello, World! From ReaganOS");
+	textscreen_termWriteStrLn ("Hello, World! From ReaganOS");
 	
 	char * str [50];
 	while (1) {
-		terminal_writeStr ("Type something, and we'll spit it out > ");
-		terminal_writeStrLn (readLine (str));
+		textscreen_termWriteStr ("Type something, and we'll spit it out > ");
+		textscreen_termWriteStrLn (readLine (str));
 	}
 }

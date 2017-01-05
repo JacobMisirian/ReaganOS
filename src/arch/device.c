@@ -42,7 +42,7 @@ device_t * device_getByName (const char * name) {
 	}
 	return -1;
 }
-
+	
 size_t device_read (device_t * dev, void * ptr, size_t bytes, uint64_t offset) {
 	return dev->read (dev, ptr, bytes, offset);
 }

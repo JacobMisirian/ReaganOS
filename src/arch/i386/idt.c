@@ -81,8 +81,8 @@ void idt_init () {
 
 void fault_handler(registers_t * r) {
 	if (r->num < 32) {
-		terminal_writeStr ("Kernel Panic! Exception type: ");
-		terminal_writeStrLn (exceptionMessages [r->num]);
+		textscreen_termWriteStr ("Kernel Panic! Exception type: ");
+		textscreen_termWriteStrLn (exceptionMessages [r->num]);
 	}
 	while (1);
 }

@@ -32,7 +32,7 @@ char * strcpy (const char * str, char * dest) {
 	for (i = 0; str [i] != 0; i++) {
 		dest [i] = str [i];
 	}
-	dest [i + 1] = 0;
+	dest [i] = 0;
 	return dest;
 }
 

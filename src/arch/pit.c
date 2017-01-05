@@ -3,7 +3,6 @@
 #include <arch/pit.h>
 #include <arch/i386/portio.h>
 #include <arch/i386/registers.h>
-#include <arch/i386/terminal.h>
 #include <io/irq.h>
 
 size_t ticks = 0;

@@ -1,20 +1,24 @@
 #include <stdint.h>
 #include <arch/device.h>
-#include <arch/i386/terminal.h>
+#include <arch/i386/textscreen.h>
 #include <drivers/keyboard.h>
 #include <lib/input.h>
 
+device_t * keyboard;
+
+keyEvent_t * readKey () {
+	uint8_t key;
+	keyboard->read (keyboard, &key, 1, 0);
+	return keyboard_scancodeToKeyEvent (key);
+}
+
 char * readLine (char * dest) {
 	size_t index = 0;
-	device_t * keyboard = device_getByName ("keyboard");
 	
 	while (1) {
-		uint8_t key;
-		keyboard->read (keyboard, &key, 1, 0);
-		keyEvent_t * press = keyboard_scancodeToKeyEvent (key);
-		
+		keyEvent_t * press = readKey ();
 		if (press->pressType == KEY_DOWN) {
-			terminal_writeChar (press->keyChar);
+			textscreen_termWriteChar (press->keyChar);
 			if (press->keyChar == 10) {
 				dest [index] = 0;
 				return dest;
@@ -23,4 +27,8 @@ char * readLine (char * dest) {
 			}
 		}
 	}
+}
+
+void input_init (const char * keyboardName) {
+	keyboard = device_getByName ("keyboard");
 }
