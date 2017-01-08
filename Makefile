@@ -25,3 +25,8 @@ clean:
 iso:
 	cp bin/ReaganOS.bin bin/iso/boot/ReaganOS.bin
 	grub-mkrescue -o bin/ReaganOS.iso bin/iso
+qemu:
+	rm $(TARGET) $(OBJECTS)
+	cp bin/ReaganOS.bin bin/iso/boot/ReaganOS.bin
+	grub-mkrescue -o bin/ReaganOS.iso bin/iso
+	qemu-system-i386 bin/ReaganOS.iso

@@ -21,7 +21,10 @@ void terminal_flush () {
 	size_t j;
 	for (i = 0; i < VGA_HEIGHT; i++) {
 		for (j = 0; j < VGA_WIDTH; j++) {
-			textscreen_writeCharAt (buffer [i * VGA_WIDTH + j], color, j, i);
+			uint16_t entry = buffer [i * VGA_WIDTH + j];
+			uint8_t c = entry & 0xFF;
+			uint8_t col = (entry >> 8);
+			textscreen_writeCharAt (c, col, j, i);
 		}
 	}
 }
@@ -30,7 +33,7 @@ void terminal_clsColor (uint8_t color) {
 	for (size_t y = 0; y < VGA_HEIGHT; y++) {
 		for (size_t x = 0; x < VGA_WIDTH; x++) {
 			const size_t index = y * VGA_WIDTH + x;
-			buffer[index] = getVgaEntry (' ', color);
+			buffer [index] = getVgaEntry (' ', color);
 		}
 	}
 }
@@ -41,7 +44,7 @@ void terminal_cls () {
 
 void terminal_writeCharAt (char c, size_t x, size_t y) {
 	const size_t index = y * VGA_WIDTH + x;
-	buffer [index] = c;
+	buffer [index] = getVgaEntry (c, color);
 }
 
 void terminal_writeChar (char c) {
@@ -94,8 +97,7 @@ size_t terminal_ioctl (device_t * dev, int one, int two, int three) {
 }
 
 device_t * terminal_init (const char * name, uint8_t tcolor) {
-	buffer = heap_alloc (VGA_WIDTH * VGA_HEIGHT);
-	memset (0, buffer, VGA_WIDTH * VGA_HEIGHT);
+	buffer = heap_alloc (VGA_WIDTH * VGA_HEIGHT * 2);
 	color = tcolor;
 	terminal_cls ();
 	
