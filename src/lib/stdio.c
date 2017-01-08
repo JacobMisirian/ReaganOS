@@ -6,34 +6,16 @@
 #include <lib/stdio.h>
 #include <lib/string.h>
 
+static size_t writeStr (char * str, char * part, size_t offset);
+
 void printf (const char * fstr, ...) {
 	va_list args;
 	va_start (args, fstr);
 	
-	int num;
-	char * temp [10];
-	char * c;
-	size_t i;
-	for (i = 0; fstr [i] != 0; i++) {
-		if (fstr [i] == '%' && fstr [i + 1] != 0) {
-			i++;
-			switch (fstr [i]) {
-				case 'd':
-					num = va_arg (args, int);
-					textscreen_termWriteStr (itoa (num, temp, 10));
-					break;
-				case 's':
-					c = va_arg (args, char *);
-					textscreen_termWriteStr (c);
-					break;
-				case '%':
-					textscreen_termWriteChar ('%');
-					break;
-			}
-		} else {
-			textscreen_termWriteChar (fstr [i]);
-		}
-	}
+	char str [fstrlen (fstr, args)];
+	sprintf (str, fstr, args);
+	textscreen_termWriteStr (str);
+	va_end (args);
 }
 
 keyEvent_t * readKey (device_t * keyboard) {
@@ -58,4 +40,49 @@ char * readLine (char * dest) {
 			}
 		}
 	}
+}
+
+int sprintf (char * str, const char * fstr, va_list args) {
+	char * temp [0xF];
+	
+	size_t strI = 0;
+	size_t i;
+	
+	for (i = 0; fstr [i] != 0; i++) {
+		if (fstr [i] == '%' && fstr [i + 1] != 0) {
+			i++;
+			switch (fstr [i]) {
+				case 'b':
+					strI += writeStr (str, itoa (va_arg (args, int), temp, 2), strI);
+					break;
+				case 'c':
+					str [strI++] = va_arg (args, char);
+					break;
+				case 'd':
+					strI += writeStr (str, itoa (va_arg (args, int), temp, 10), strI);
+					break;
+				case 'o':
+					strI += writeStr (str, itoa (va_arg (args, int), temp, 8), strI);
+					break;
+				case 's':
+					strI += writeStr (str, va_arg (args, char *), strI);
+					break;
+				case 'x':
+					strI += writeStr (str, itoa (va_arg (args, int), temp, 16), strI);
+					break;
+			}
+		} else {
+			str [strI++] = fstr [i];
+		}
+	}
+	str [strI] = 0;
+	return strlen (strI);
+}
+
+static size_t writeStr (char * str, char * part, size_t offset) {
+	size_t i;
+	for (i = offset; part [i - offset] != 0; i++) {
+		str [i] = part [i - offset];
+	}
+	return i - offset;
 }

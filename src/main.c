@@ -20,9 +20,11 @@ int main (void *multibootinfo) {
 	textscreen_init ();
 	pit_init (100);
 	
-	char str [50];
+	char buf [50];
+	size_t i = 0;
 	while (1) {
 		printf ("Type something, and we'll spit it out> ");
-		printf ("%s\n", readLine (str));
+		char * str = readLine (buf);
+		printf ("%s\n", str);
 	}
 }

@@ -14,17 +14,19 @@ static uint16_t * buffer;
 
 static device_t * device;
 
+static void newLine ();
+
 void terminal_flush () {
 	textscreen_reset (color);
 	uint16_t * buf = (uint16_t *) 0xB8000;
-	size_t i;
-	size_t j;
-	for (i = 0; i < VGA_HEIGHT; i++) {
-		for (j = 0; j < VGA_WIDTH; j++) {
-			uint16_t entry = buffer [i * VGA_WIDTH + j];
+	size_t x;
+	size_t y;
+	for (y = 0; y < VGA_HEIGHT; y++) {
+		for (x = 0; x < VGA_WIDTH; x++) {
+			uint16_t entry = buffer [y * VGA_WIDTH + x];
 			uint8_t c = entry & 0xFF;
 			uint8_t col = (entry >> 8);
-			textscreen_writeCharAt (c, col, j, i);
+			textscreen_writeCharAt (c, col, x, y);
 		}
 	}
 }
@@ -50,8 +52,7 @@ void terminal_writeCharAt (char c, size_t x, size_t y) {
 void terminal_writeChar (char c) {
 	switch (c) {
 		case '\n':
-			row++;
-			column = 0;
+		newLine ();
 			break;
 		case '\t':
 			for (size_t i = 0; i < TAB_LENGTH; i++) terminal_writeChar (' ');
@@ -59,12 +60,30 @@ void terminal_writeChar (char c) {
 		default:
 			terminal_writeCharAt (c, column, row);
 			if (++column == VGA_WIDTH) {
-				column = 0;
-				if (++row == VGA_HEIGHT) {
-					row = 0;
-				}
+				newLine ();
 			}
 			break;
+	}
+}
+
+static void newLine () {
+	column = 0;
+	if (++row == VGA_HEIGHT) {
+		size_t x;
+		size_t y;
+		uint16_t * temp [VGA_WIDTH];
+		for (y = 1; y < VGA_HEIGHT; y++) {
+			for (x = 0; x < VGA_WIDTH; x++) {
+				temp [x] = buffer [y * VGA_WIDTH + x];
+			}
+			for (x = 0; x < VGA_WIDTH; x++) {
+				buffer [(y - 1) * VGA_WIDTH + x] = temp [x];
+			}
+		}
+		row--;
+		for (x = 0; x < VGA_WIDTH; x++) {
+			buffer [row * VGA_WIDTH + x] = getVgaEntry (' ', color);
+		}
 	}
 }
 
