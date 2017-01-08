@@ -5,8 +5,8 @@
 #include <arch/i386/registers.h>
 #include <io/irq.h>
 
-size_t ticks = 0;
-size_t frequency;
+static size_t ticks = 0;
+static size_t frequency;
 
 size_t pit_getTicks () {
 	return ticks;

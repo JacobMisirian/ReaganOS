@@ -6,7 +6,7 @@
 #include <drivers/keyboard.h>
 #include <drivers/terminal.h>
 #include <io/irq.h>
-#include <lib/input.h>
+#include <lib/stdio.h>
 #include <lib/string.h>
 #include <mm/heap.h>
 
@@ -19,11 +19,10 @@ int main (void *multibootinfo) {
 	size_t ptr = keyboard_init ();
 	textscreen_init ();
 	pit_init (100);
-	input_init ("keyboard");
 	
 	char str [50];
 	while (1) {
-		textscreen_termWriteStrLn ("Type something, and we'll spit it out > ");
-		textscreen_termWriteStrLn (readLine (str));
+		printf ("Type something, and we'll spit it out> ");
+		printf ("%s\n", readLine (str));
 	}
 }

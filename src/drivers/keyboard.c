@@ -5,7 +5,7 @@
 #include <io/irq.h>
 
 // Standard US Keyboard
-uint8_t kbdus [128] = {
+static const uint8_t kbdus [128] = {
     0,  27, '1', '2', '3', '4', '5', '6', '7', '8',	/* 9 */
 	'9', '0', '-', '=', '\b',	/* Backspace */
 	'\t',			/* Tab */

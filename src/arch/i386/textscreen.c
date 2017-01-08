@@ -5,13 +5,13 @@
 #include <arch/i386/textscreen.h>
 #include <lib/string.h>
 
-size_t textscreen_row;
-size_t textscreen_column;
-uint8_t textscreen_color;
-uint16_t * textscreen_buffer;
+static size_t textscreen_row;
+static size_t textscreen_column;
+static uint8_t textscreen_color;
+static uint16_t * textscreen_buffer;
 
-device_t * ttys [8];
-uint8_t tty;
+static device_t * ttys [8];
+static uint8_t tty;
 
 void textscreen_reset (uint8_t color) {
 	textscreen_row = 0;
@@ -91,7 +91,7 @@ void textscreen_termWriteStr (const char * str) {
 	ttys [tty]->write (ttys [tty], str, strlen (str), 0);
 }
 
-static uint8_t newline = '\n';
+static const uint8_t newline = '\n';
 void textscreen_termWriteStrLn (const char * str) {
 	ttys [tty]->write (ttys [tty], str, strlen (str), 0);
 	ttys [tty]->write (ttys [tty], &newline, 1, 0);

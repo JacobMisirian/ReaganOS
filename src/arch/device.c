@@ -5,7 +5,7 @@
 #include <lib/string.h>
 #include <mm/heap.h>
 
-device_t * headDevice = 0;
+static device_t * headDevice = 0;
 
 static char cname [128];
 

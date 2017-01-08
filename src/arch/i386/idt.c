@@ -5,7 +5,7 @@
 #include <arch/i386/registers.h>
 #include <lib/string.h>
 
-char * exceptionMessages [] = {
+static char * exceptionMessages [] = {
 	"Divide by zero",
 	"Debug",
 	"Non maskable interrupt",

@@ -5,7 +5,7 @@
 #include <arch/i386/registers.h>
 #include <io/irq.h>
 
-void * irqHandlers [16] = { 0 };
+static void * irqHandlers [16] = { 0 };
 
 void irq_clearHandler (size_t num) {
 	irqHandlers [num] = 0;
