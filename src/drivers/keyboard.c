@@ -79,9 +79,9 @@ size_t keyboard_ioctl (struct device_t * self, int one, int two, int three) {
 	
 }
 
-void keyboard_init () {
+device_t * keyboard_init () {
 	irq_setHandler (1, keyboard_handler);
-	device_add ("keyboard", keyboard_read, keyboard_write, keyboard_ioctl);
+	return device_add ("keyboard", keyboard_read, keyboard_write, keyboard_ioctl);
 }
 
 keyEvent_t * keyboard_scancodeToKeyEvent (uint8_t key) {

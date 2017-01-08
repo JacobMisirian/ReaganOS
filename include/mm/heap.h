@@ -6,11 +6,6 @@
 
 #include <mm/heapBlock.h>
 
-static void * nextPtr;
-
-static node_t * freeHead;
-static node_t * usedHead;
-
 void * heap_alloc (size_t bytes);
 size_t heap_free (void * ptr);
 void heap_init ();

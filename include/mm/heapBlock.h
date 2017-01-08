@@ -4,10 +4,9 @@
 #include <stdint.h>
 #include <stddef.h>
 
-typedef struct node {
+typedef struct {
 	void * ptr;
 	size_t size;
-	size_t len;
 	struct node * next;
 } node_t;
 

@@ -5,6 +5,7 @@
 #include <arch/i386/textscreen.h>
 #include <drivers/terminal.h>
 #include <mm/heap.h>
+#include <lib/string.h>
 
 size_t row = 0;
 size_t column = 0;
@@ -16,11 +17,12 @@ device_t * device;
 void terminal_flush () {
 	textscreen_reset (color);
 	
-	size_t len = VGA_WIDTH * VGA_HEIGHT;
-	
 	size_t i;
-	for (i = 0; i < len; i++) {
-		textscreen_writeChar (buffer [i]);
+	size_t j;
+	for (i = 0; i < VGA_HEIGHT; i++) {
+		for (j = 0; j < VGA_WIDTH; j++) {
+			textscreen_writeCharAt (buffer [i * VGA_WIDTH + j], color, j, i);
+		}
 	}
 }
 
@@ -37,9 +39,9 @@ void terminal_cls () {
 	terminal_clsColor (color);
 }
 
-void terminal_writeCharAt (char c, uint8_t color, size_t x, size_t y) {
+void terminal_writeCharAt (char c, size_t x, size_t y) {
 	const size_t index = y * VGA_WIDTH + x;
-	buffer[index] = getVgaEntry(c, color);
+	buffer [index] = c;
 }
 
 void terminal_writeChar (char c) {
@@ -52,7 +54,7 @@ void terminal_writeChar (char c) {
 			for (size_t i = 0; i < TAB_LENGTH; i++) terminal_writeChar (' ');
 			break;
 		default:
-			terminal_writeCharAt (c, color, column, row);
+			terminal_writeCharAt (c, column, row);
 			if (++column == VGA_WIDTH) {
 				column = 0;
 				if (++row == VGA_HEIGHT) {
@@ -93,6 +95,7 @@ size_t terminal_ioctl (device_t * dev, int one, int two, int three) {
 
 device_t * terminal_init (const char * name, uint8_t tcolor) {
 	buffer = heap_alloc (VGA_WIDTH * VGA_HEIGHT);
+	memset (0, buffer, VGA_WIDTH * VGA_HEIGHT);
 	color = tcolor;
 	terminal_cls ();
 	

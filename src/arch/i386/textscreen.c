@@ -43,7 +43,7 @@ void textscreen_init () {
 	
 	char name [2];
 	size_t i;
-	for (i = 0; i < 8; i++) {
+	for (i = 0; i < 2; i++) {
 		ttys [i] = terminal_init (itoa (i, name, 10), textscreen_color);
 	}
 	tty = 0;
@@ -73,6 +73,14 @@ void textscreen_writeChar (char c) {
 			}
 			break;
 	}
+}
+
+void textscreen_writeStrLn (const char * str) {
+	size_t i;
+	for (i = 0; str [i] != 0; i++) {
+		textscreen_writeChar (str [i]);
+	}
+	textscreen_writeChar ('\n');
 }
 
 void textscreen_termWriteChar (char c) {

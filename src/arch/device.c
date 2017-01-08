@@ -7,12 +7,15 @@
 
 device_t * headDevice = 0;
 
+static char cname [128];
+
 device_t * device_add (const char * name,
 						size_t (* read) (struct device_t *, void *, size_t, uint64_t),
 						size_t (* write) (struct device_t *, void *, size_t, uint64_t),
 						size_t (* ioctl) (struct device_t *, int, int, int)) {
 	device_t * dev = (device_t *)heap_alloc (sizeof (device_t));
-	dev->name = name;
+	strcpy (name, &dev->name);
+	
 	dev->read = read;
 	dev->write = write;
 	dev->ioctl = ioctl;

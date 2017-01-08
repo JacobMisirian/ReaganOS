@@ -16,16 +16,17 @@ int main (void *multibootinfo) {
 	gdt_init ();
 	idt_init ();
 	irq_init ();
+	size_t ptr = keyboard_init ();
 	textscreen_init ();
 	pit_init (100);
-	keyboard_init ();
 	input_init ("keyboard");
 	
-	textscreen_termWriteStrLn ("Hello, World! From ReaganOS");
+	textscreen_termWriteChar ('a');
 	
-	char * str [50];
+	
+	char str [50];
 	while (1) {
-		textscreen_termWriteStr ("Type something, and we'll spit it out > ");
+		textscreen_termWriteStrLn ("Type something, and we'll spit it out > ");
 		textscreen_termWriteStrLn (readLine (str));
 	}
 }

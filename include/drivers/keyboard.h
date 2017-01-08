@@ -12,7 +12,7 @@ typedef struct {
 	uint8_t pressType; // 0 is keyDown, 1 is keyUp
 } keyEvent_t;
 
-void keyboard_init ();
+device_t * keyboard_init ();
 keyEvent_t * keyboard_scanCodeToKeyEvent (uint8_t key);
 
 #endif

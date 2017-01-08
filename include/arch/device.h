@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 typedef struct {
-	const char * name;
+	char name [128];
 	size_t (* read) (struct device_t *, void *, size_t, uint64_t);
 	size_t (* write) (struct device_t *, void *, size_t, uint64_t);
 	size_t (* ioctl) (struct device_t *, int, int, int);
