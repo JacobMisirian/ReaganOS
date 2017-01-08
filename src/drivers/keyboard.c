@@ -44,8 +44,8 @@ uint8_t kbdus [128] = {
     0,	/* All other keys are undefined */
 };
 
-uint8_t buffer;
-size_t count = 0;
+static uint8_t buffer;
+static size_t count = 0;
 
 void keyboard_handler (registers_t * r) {
 	uint8_t key = inportb (0x60);

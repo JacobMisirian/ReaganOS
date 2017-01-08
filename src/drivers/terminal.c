@@ -7,16 +7,16 @@
 #include <mm/heap.h>
 #include <lib/string.h>
 
-size_t row = 0;
-size_t column = 0;
-uint8_t color;
-uint16_t * buffer;
+static size_t row = 0;
+static size_t column = 0;
+static uint8_t color;
+static uint16_t * buffer;
 
-device_t * device;
+static device_t * device;
 
 void terminal_flush () {
 	textscreen_reset (color);
-	
+	uint16_t * buf = (uint16_t *) 0xB8000;
 	size_t i;
 	size_t j;
 	for (i = 0; i < VGA_HEIGHT; i++) {

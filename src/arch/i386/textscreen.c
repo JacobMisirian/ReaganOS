@@ -36,7 +36,7 @@ void textscreen_init () {
 	textscreen_row = 0;
 	textscreen_column = 0;
 	textscreen_color = getVgaColor (VGA_COLOR_GREEN, VGA_COLOR_BLACK);
-	textscreen_buffer = (uint16_t*) 0xB8000;
+	textscreen_buffer = (uint16_t *) 0xB8000;
 	
 	// init background
 	textscreen_cls ();

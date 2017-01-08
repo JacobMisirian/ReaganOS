@@ -21,9 +21,6 @@ int main (void *multibootinfo) {
 	pit_init (100);
 	input_init ("keyboard");
 	
-	textscreen_termWriteChar ('a');
-	
-	
 	char str [50];
 	while (1) {
 		textscreen_termWriteStrLn ("Type something, and we'll spit it out > ");
