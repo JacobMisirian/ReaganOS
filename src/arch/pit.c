@@ -4,6 +4,7 @@
 #include <arch/i386/portio.h>
 #include <arch/i386/registers.h>
 #include <io/irq.h>
+#include <lib/stdio.h>
 
 static size_t ticks = 0;
 static size_t frequency;
@@ -28,10 +29,9 @@ void pit_init (uint32_t freq) {
 }
 
 void pit_sleep (size_t num) {
-	size_t start = ticks;
-	size_t end = start + num;
+	size_t end = ticks + num;
 	
-	while (start++ < end) ;
+	while (ticks < end) ;
 }
 
 void pit_sleepSecs (size_t secs) {

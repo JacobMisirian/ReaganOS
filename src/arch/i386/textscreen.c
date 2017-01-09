@@ -3,6 +3,7 @@
 
 #include <arch/device.h>
 #include <arch/i386/textscreen.h>
+#include <lib/stdio.h>
 #include <lib/string.h>
 
 static size_t textscreen_row;
@@ -97,6 +98,9 @@ void textscreen_termWriteStrLn (const char * str) {
 	ttys [tty]->write (ttys [tty], &newline, 1, 0);
 }
 
-void textscreen_selectTty (uint8_t t) {
+uint8_t textscreen_getTty () {
+	return tty;
+}
+void textscreen_setTty (uint8_t t) {
 	tty = t;
 }

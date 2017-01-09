@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <arch/device.h>
 
 #define KEY_DOWN 0
 #define KEY_UP 1

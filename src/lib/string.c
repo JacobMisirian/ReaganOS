@@ -2,7 +2,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <lib/string.h>	
+#include <lib/stdio.h>
+#include <lib/string.h>
+#include <mm/heap.h>
 
 int atoi (const char * str) {
 	int res = 0;
@@ -137,7 +139,7 @@ size_t strlen (const char * str) {
 	return res - 1;
 }
 
-int strrchr (const char * str, unsigned char c) {
+int strrchr (const char * str, uint8_t c) {
 	int i;
 	for (i = strlen (str) - 1; i >= 0; i--) {
 		if (str [i] == c) {
@@ -159,6 +161,33 @@ char * strrev (char * str) {
 		str [j] = temp;
 	}
 	return str;
+}
+
+char * strsplit (char * str, uint8_t c, char * out) {
+	if (str [0] == NULL) return NULL;
+	
+	size_t i;
+	for (i = 0; str [i] != 0; i++) {
+		if (str [i] == c) {
+			break;
+		}
+		out [i] = str [i];
+	}
+	
+	if (str [i] == 0) {
+		strcpy (str, out);
+		str [0] = NULL;
+		return out;
+	}
+	out [i++] = NULL;
+	
+	size_t j;
+	for (j = 0; str [i] != 0; i++) {
+		str [j++] = str [i];
+	}
+	str [j] = NULL;
+	
+	return out;
 }
 
 char * substr (const char * str, size_t startIndex, size_t endIndex, char * out) {

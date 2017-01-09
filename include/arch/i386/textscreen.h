@@ -8,8 +8,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
+uint8_t textscreen_getTty ();
 void textscreen_init ();
 void textscreen_reset (uint8_t color);
+void textscreen_selectTty (uint8_t tty);
 void textscreen_termWriteChar (char c);
 void textscreen_termWriteStr (const char * str);
 void textscreen_termWriteStrLn (const char * str);
