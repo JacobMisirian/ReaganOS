@@ -32,7 +32,7 @@ static void interpretCmd (const char * cmd) {
 		if (strsplit (cmd, ' ', out) == NULL) {
 			printf ("Current tty: %d\n", textscreen_getTty ());
 		} else {
-			textscreen_selectTty (atoi (out));
+			textscreen_setTty (atoi (out));
 		}
 	}
 }

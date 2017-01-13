@@ -1,5 +1,5 @@
-#ifndef terminal_h
-#define terminal_h
+#ifndef textscreen_h
+#define textscreen_h
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
@@ -15,7 +15,6 @@ void textscreen_selectTty (uint8_t tty);
 void textscreen_termWriteChar (char c);
 void textscreen_termWriteStr (const char * str);
 void textscreen_termWriteStrLn (const char * str);
-void textscreen_writeChar (char c);
 void textscreen_writeCharAt (char c, uint8_t color, size_t x, size_t y);
 
 typedef enum {

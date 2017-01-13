@@ -1,17 +1,18 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <arch/device.h>
 #include <arch/i386/textscreen.h>
+#include <drivers/terminal.h>
 #include <lib/stdio.h>
 #include <lib/string.h>
+#include <mm/heap.h>
 
 static size_t textscreen_row;
 static size_t textscreen_column;
 static uint8_t textscreen_color;
 static uint16_t * textscreen_buffer;
 
-static device_t * ttys [8];
+static struct terminalContext * ttys [8];
 static uint8_t tty;
 
 void textscreen_reset (uint8_t color) {
@@ -42,10 +43,11 @@ void textscreen_init () {
 	// init background
 	textscreen_cls ();
 	
-	char name [2];
 	size_t i;
-	for (i = 0; i < 2; i++) {
-		ttys [i] = terminal_init (itoa (i, name, 10), textscreen_color);
+	for (i = 0; i < 8; i++) {
+		struct terminalContext * context = heap_alloc (sizeof (struct terminalContext));
+		terminal_init (context, textscreen_color);
+		ttys [i] = context;
 	}
 	tty = 0;
 }
@@ -55,47 +57,18 @@ void textscreen_writeCharAt (char c, uint8_t color, size_t x, size_t y) {
 	textscreen_buffer[index] = getVgaEntry(c, color);
 }
 
-void textscreen_writeChar (char c) {
-	switch (c) {
-		case '\n':
-			textscreen_row++;
-			textscreen_column = 0;
-			break;
-		case '\t':
-			for (size_t i = 0; i < TAB_LENGTH; i++) textscreen_writeChar (' ');
-			break;
-		default:
-			textscreen_writeCharAt (c, textscreen_color, textscreen_column, textscreen_row);
-			if (++textscreen_column == VGA_WIDTH) {
-				textscreen_column = 0;
-				if (++textscreen_row == VGA_HEIGHT) {
-					textscreen_row = 0;
-				}
-			}
-			break;
-	}
-}
-
-void textscreen_writeStrLn (const char * str) {
-	size_t i;
-	for (i = 0; str [i] != 0; i++) {
-		textscreen_writeChar (str [i]);
-	}
-	textscreen_writeChar ('\n');
-}
-
 void textscreen_termWriteChar (char c) {
-	ttys [tty]->write (ttys [tty], &c, 1, 0);
+	terminal_write (ttys [tty], &c, 1, 0);
 }
 
 void textscreen_termWriteStr (const char * str) {
-	ttys [tty]->write (ttys [tty], str, strlen (str), 0);
+	terminal_write (ttys [tty], str, strlen (str), 0);
 }
 
 static const uint8_t newline = '\n';
 void textscreen_termWriteStrLn (const char * str) {
-	ttys [tty]->write (ttys [tty], str, strlen (str), 0);
-	ttys [tty]->write (ttys [tty], &newline, 1, 0);
+	terminal_write (ttys [tty], str, strlen (str), 0);
+	terminal_write (ttys [tty], &newline, 1, 0);
 }
 
 uint8_t textscreen_getTty () {
