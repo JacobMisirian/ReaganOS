@@ -31,7 +31,7 @@ char * readLine (char * dest) {
 	while (1) {
 		keyEvent_t * press = readKey (keyboard);
 		if (press->pressType == KEY_DOWN) {
-			if (press->keyChar == 8) {
+			if (press->keyChar == '\b') {
 				if (index > 0) {
 					textscreen_termWriteChar (press->keyChar);
 					dest [index--] = 0;
