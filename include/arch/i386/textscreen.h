@@ -8,15 +8,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-uint8_t textscreen_getTty ();
-void textscreen_init ();
-void textscreen_reset (uint8_t color);
-void textscreen_selectTty (uint8_t tty);
-void textscreen_termWriteChar (char c);
-void textscreen_termWriteStr (const char * str);
-void textscreen_termWriteStrLn (const char * str);
-void textscreen_writeCharAt (char c, uint8_t color, size_t x, size_t y);
-
 typedef enum {
         VGA_COLOR_BLACK = 0,
         VGA_COLOR_BLUE = 1,
@@ -35,6 +26,19 @@ typedef enum {
         VGA_COLOR_LIGHT_BROWN = 14,
         VGA_COLOR_WHITE = 15
 } vgaColor_t;
+
+uint8_t textscreen_getTty ();
+void textscreen_init ();
+void textscreen_reset (uint8_t color);
+void textscreen_setTty (uint8_t t);
+vgaColor_t textscreen_termGetBColor ();
+vgaColor_t textscreen_termGetFColor ();
+void textscreen_termSetBColor (vgaColor_t col);
+void textscreen_termSetFColor (vgaColor_t col);
+void textscreen_termWriteChar (char c);
+void textscreen_termWriteStr (const char * str);
+void textscreen_termWriteStrLn (const char * str);
+void textscreen_writeCharAt (char c, uint8_t color, size_t x, size_t y);
 
 static inline uint8_t getVgaColor (vgaColor_t fg, vgaColor_t bg) {
 	return fg | bg << 4;

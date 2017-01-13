@@ -15,6 +15,7 @@ char * strcpy (const char * str, char * dest);
 size_t strlen (const char * str);
 char * strrev (char * str);
 char * strsplit (char * str, uint8_t c, char * out);
+int8_t strStarts (const char * str1, const char * str2);
 char * substr (const char * str, size_t startIndex, size_t endIndex, char * out);
 
 #endif

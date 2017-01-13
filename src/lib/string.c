@@ -190,6 +190,23 @@ char * strsplit (char * str, uint8_t c, char * out) {
 	return out;
 }
 
+int8_t strStarts (const char * str1, const char * str2) {
+	size_t len1 = strlen (str1);
+	size_t len2 = strlen (str2);
+	
+	if (len2 > len1) {
+		return -1;
+	}
+	
+	size_t i;
+	for (i = 0; i < len2; i++) {
+		if (str1 [i] != str2 [i]) {
+			return -1;
+		}
+	}
+	return 1;
+}
+
 char * substr (const char * str, size_t startIndex, size_t endIndex, char * out) {
 	size_t i = 0;
 	while (startIndex < endIndex) {
