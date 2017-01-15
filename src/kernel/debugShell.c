@@ -1,5 +1,6 @@
 #include <arch/pit.h>
 #include <arch/i386/textscreen.h>
+#include <io/initrd.h>
 #include <kernel/debugShell.h>
 #include <lib/stdio.h>
 #include <lib/string.h>
@@ -60,6 +61,24 @@ static void interpretCmd (const char * cmd) {
 				printf ("Error! Enter a valid color string!\n");
 			} else {
 				textscreen_termSetFColor (strToVga (out));
+			}
+		}
+	} else if (strcmp (out, "ls") == 0) {
+		char temp [0xFF];
+		printf ("Directory Listing:\n%s", initrd_listFiles (&temp, '\n'));
+	} else if (strcmp (out, "cat") == 0) {
+		if (strsplit (cmd, ' ', out) == NULL) {
+			printf ("Error! Enter a file name!");
+		} else {
+			char * ptr = initrd_getFile (out);
+			if (ptr == -1) {
+				printf ("Error! File does not exist!\n");
+			} else {
+				int64_t len = initrd_getFileLen (out);
+				size_t i;
+				for (i = 0; i < len; i++) {
+					printf ("%c", ptr [i]);
+				}
 			}
 		}
 	}

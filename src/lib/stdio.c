@@ -66,7 +66,7 @@ int sprintf (char * str, const char * fstr, va_list args) {
 					strI += writeStr (str, itoa (va_arg (args, int), temp, 2), strI);
 					break;
 				case 'c':
-					str [strI++] = va_arg (args, char);
+					str [strI++] = (uint8_t)va_arg (args, int);
 					break;
 				case 'd':
 					strI += writeStr (str, itoa (va_arg (args, int), temp, 10), strI);

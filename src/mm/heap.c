@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <kernel/multiboot.h>
 #include <mm/heap.h>
 #include <mm/heapBlock.h>
 
@@ -17,8 +18,8 @@ static void * heap_internalAlloc (size_t bytes) {
 	return pointer;
 }
 
-void heap_init () {
-	nextPtr = &end;
+void heap_init (multiboot_info_t * multibootinfo) {
+	nextPtr = *(uint32_t *)(multibootinfo->mods_addr + 4);
 	
 	freeHead = NULL;
 	usedHead = NULL;

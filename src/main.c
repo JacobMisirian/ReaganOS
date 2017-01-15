@@ -5,17 +5,20 @@
 #include <arch/i386/textscreen.h>
 #include <drivers/keyboard.h>
 #include <kernel/debugShell.h>
+#include <kernel/multiboot.h>
+#include <io/initrd.h>
 #include <mm/heap.h>
 
-int main (void *multibootinfo) {
+int main (multiboot_info_t * multibootinfo) {
 	irq_remap ();
-	heap_init ();
+	heap_init (multibootinfo);
 	gdt_init ();
 	idt_init ();
 	irq_init ();
 	keyboard_init ();
 	textscreen_init ();
 	pit_init (100);
+	initrd_init (multibootinfo);
 
 	debugShell_start ();
 }
