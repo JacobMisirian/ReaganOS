@@ -1,9 +1,9 @@
 #include <arch/pit.h>
 #include <arch/i386/gdt.h>
 #include <arch/i386/idt.h>
+#include <arch/i386/irq.h>
 #include <arch/i386/textscreen.h>
 #include <drivers/keyboard.h>
-#include <io/irq.h>
 #include <kernel/debugShell.h>
 #include <mm/heap.h>
 

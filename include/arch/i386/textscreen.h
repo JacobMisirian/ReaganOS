@@ -31,6 +31,7 @@ uint8_t textscreen_getTty ();
 void textscreen_init ();
 void textscreen_reset (uint8_t color);
 void textscreen_setTty (uint8_t t);
+void textscreen_termCls ();
 vgaColor_t textscreen_termGetBColor ();
 vgaColor_t textscreen_termGetFColor ();
 void textscreen_termSetBColor (vgaColor_t col);

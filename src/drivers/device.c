@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <arch/device.h>
+#include <drivers/device.h>
 #include <lib/string.h>
 #include <mm/heap.h>
 

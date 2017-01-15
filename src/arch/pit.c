@@ -1,9 +1,9 @@
 #include <stdint.h>
 #include <stdint.h>
 #include <arch/pit.h>
+#include <arch/i386/irq.h>
 #include <arch/i386/portio.h>
 #include <arch/i386/registers.h>
-#include <io/irq.h>
 #include <lib/stdio.h>
 
 static size_t ticks = 0;

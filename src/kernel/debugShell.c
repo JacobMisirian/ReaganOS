@@ -30,6 +30,8 @@ static void interpretCmd (const char * cmd) {
 			printf ("%s ", out);
 		}
 		printf ("\n");
+	} else if (strcmp (out, "cls") == 0) {
+		textscreen_termCls ();
 	} else if (strcmp (out, "tty") == 0) {
 		if (strsplit (cmd, ' ', out) == NULL) {
 			printf ("Current tty: %d\n", textscreen_getTty ());

@@ -76,6 +76,12 @@ void textscreen_setTty (uint8_t t) {
 	tty = t;
 }
 
+void textscreen_termCls () {
+	ttys [tty]->row = 0;
+	ttys [tty]->column = 0;
+	terminal_cls (ttys [tty]);
+}
+
 void textscreen_termWriteChar (char c) {
 	terminal_write (ttys [tty], &c, 1, 0);
 }

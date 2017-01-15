@@ -1,9 +1,9 @@
 #include <stddef.h>
 
 #include <arch/i386/idt.h>
+#include <arch/i386/irq.h>
 #include <arch/i386/portio.h>
 #include <arch/i386/registers.h>
-#include <io/irq.h>
 
 static void * irqHandlers [16] = { 0 };
 

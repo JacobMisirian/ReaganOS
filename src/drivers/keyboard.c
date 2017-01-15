@@ -1,8 +1,8 @@
 #include <stddef.h>
-#include <arch/device.h>
+#include <arch/i386/irq.h>
 #include <arch/i386/portio.h>
+#include <drivers/device.h>
 #include <drivers/keyboard.h>
-#include <io/irq.h>
 
 // Standard US Keyboard
 static const uint8_t kbdus [128] = {

@@ -1,7 +1,7 @@
 #include <stdarg.h>
 #include <stdint.h>
-#include <arch/device.h>
 #include <arch/i386/textscreen.h>
+#include <drivers/device.h>
 #include <drivers/keyboard.h>
 #include <lib/stdio.h>
 #include <lib/string.h>
