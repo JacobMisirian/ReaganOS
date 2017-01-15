@@ -4,6 +4,7 @@
 #include <kernel/multiboot.h>
 #include <io/initrd.h>
 #include <lib/stdio.h>
+#include <lib/stream.h>
 #include <lib/string.h>
 #include <mm/heap.h>
 
@@ -46,11 +47,11 @@ void initrd_init (multiboot_info_t * multibootinfo) {
 	}
 }
 
-char * initrd_getFile (const char * name) {
+stream_t * initrd_getFile (const char * name) {
 	initrdFile_t * file = getInitrdFile (name);
 	if (file == -1)
 		return -1;
-	return file->ptr;
+	return stream_memstreamInit (file->ptr, initrd_getFileLen (name));
 }
 
 int64_t initrd_getFileLen (const char * name) {

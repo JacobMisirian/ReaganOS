@@ -4,10 +4,11 @@
 #include <stdint.h>
 #include <stddef.h>
 
-typedef struct {
+typedef struct node {
 	void * ptr;
 	size_t size;
 	struct node * next;
+	struct node * pre;
 } node_t;
 
 #endif

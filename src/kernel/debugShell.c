@@ -3,6 +3,7 @@
 #include <io/initrd.h>
 #include <kernel/debugShell.h>
 #include <lib/stdio.h>
+#include <lib/stream.h>
 #include <lib/string.h>
 
 static void interpretCmd (const char * cmd);
@@ -70,14 +71,12 @@ static void interpretCmd (const char * cmd) {
 		if (strsplit (cmd, ' ', out) == NULL) {
 			printf ("Error! Enter a file name!");
 		} else {
-			char * ptr = initrd_getFile (out);
-			if (ptr == -1) {
+			stream_t * stream = initrd_getFile (out);
+			if (stream == -1) {
 				printf ("Error! File does not exist!\n");
 			} else {
-				int64_t len = initrd_getFileLen (out);
-				size_t i;
-				for (i = 0; i < len; i++) {
-					printf ("%c", ptr [i]);
+				while (stream_peek (stream) != -1) {
+					printf ("%c", stream_read (stream));
 				}
 			}
 		}

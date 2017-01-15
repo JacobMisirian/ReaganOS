@@ -8,7 +8,7 @@
 #include <mm/heapBlock.h>
 
 void * heap_alloc (size_t bytes);
-size_t heap_free (void * ptr);
+int heap_free (void * ptr);
 void heap_init (multiboot_info_t * multibootinfo);
 
 #endif
