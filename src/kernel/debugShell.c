@@ -1,6 +1,5 @@
 #include <arch/pit.h>
 #include <arch/i386/textscreen.h>
-#include <io/initrd.h>
 #include <io/vfs.h>
 #include <kernel/debugShell.h>
 #include <lib/stdio.h>
@@ -18,7 +17,7 @@ void debugShell_start () {
 	
 	char cmd [50];
 	while (1) {
-		printf ("[debug]# ");
+		printf ("[debug:%s]# ", curDir);
 		readLine (cmd);
 		interpretCmd (cmd);
 	}
@@ -106,6 +105,7 @@ static void interpretCmd (const char * cmd) {
 }
 
 static vgaColor_t strToVga (char * str) {
+	strlow (str);
 	if (strcmp (str, "black") == 0) {
 		return VGA_COLOR_BLACK;
 	}

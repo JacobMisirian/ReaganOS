@@ -143,6 +143,16 @@ size_t strlen (const char * str) {
 	return res - 1;
 }
 
+char * strlow (char * str) {
+	size_t i;
+	for (i = 0; str [i] != 0; i++) {
+		if (str [i] >= 65 && str [i] <= 90) {
+			str [i] += 32;
+		}
+	}
+	return str;
+}
+
 int strrchr (const char * str, uint8_t c) {
 	int i;
 	for (i = strlen (str) - 1; i >= 0; i--) {
@@ -209,6 +219,16 @@ int8_t strStarts (const char * str1, const char * str2) {
 		}
 	}
 	return 0;
+}
+
+char * strup (char * str) {
+	size_t i;
+	for (i = 0; str [i] != 0; i++) {
+		if (str [i] >= 97 && str [i] <= 122) {
+			str [i] -= 32;
+		}
+	}
+	return str;
 }
 
 char * substr (const char * str, size_t startIndex, size_t endIndex, char * out) {
