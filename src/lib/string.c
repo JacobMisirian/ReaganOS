@@ -96,14 +96,18 @@ void * memset (unsigned char b, void * ptr, size_t len) {
 	return ptr;
 }
 
-char * strcat (char * str1, const char * str2) {
-	size_t len = strlen (str1);
+char * strcat (const char * str1, const char * str2, char * out) {
+	size_t outPos = 0;
+	
 	size_t i;
-	for (i = 0; str2 [i] != 0; i++) {
-		str1 [len + i] = str2 [i];
+	for (i = 0; str1 [i] != 0; i++) {
+		out [outPos++] = str1 [i];
 	}
-	str1 [len + i + 1] = 0;
-	return str1;
+	for (i = 0; str2 [i] != 0; i++) {
+		out [outPos++] = str2 [i];
+	}
+	out [outPos++] = 0;
+	return out;
 }
 
 int strchr (const char * str, unsigned char c) {
@@ -204,7 +208,7 @@ int8_t strStarts (const char * str1, const char * str2) {
 			return -1;
 		}
 	}
-	return 1;
+	return 0;
 }
 
 char * substr (const char * str, size_t startIndex, size_t endIndex, char * out) {

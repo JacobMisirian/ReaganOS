@@ -7,6 +7,7 @@
 #include <kernel/debugShell.h>
 #include <kernel/multiboot.h>
 #include <io/initrd.h>
+#include <io/vfs.h>
 #include <mm/heap.h>
 
 int main (multiboot_info_t * multibootinfo) {

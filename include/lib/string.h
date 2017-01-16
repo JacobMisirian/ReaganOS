@@ -8,7 +8,7 @@ int atoi (const char * str);
 size_t fstrlen (const char * fstr, va_list args);
 char * itoa(int num, char * out, int base);
 void * memset (unsigned char b, void * ptr, size_t len);
-char * strcat (char * str1, const char * str2);
+char * strcat (const char * str1, const char * str2, char * out);
 int strchr (const char * str, unsigned char c);
 int strcmp (const char * s1, const char * s2);
 char * strcpy (const char * str, char * dest);
