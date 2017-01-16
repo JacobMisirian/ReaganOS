@@ -22,8 +22,8 @@ typedef struct filesystem {
 	void (* deleteFile) 	(const char *);
 	int  (* dirExists) 		(const char *);
 	int  (* fileExists) 	(const char *);
-	dirEntry_t * (* getDirListing) 	(const char *);
-	fileEntry_t * (* getFileListing) 	(const char *);
+	dirEntry_t * (* getDirListing) 	 (const char *);
+	fileEntry_t * (* getFileListing) (const char *);
 	stream_t * (* openFile) (const char *);
 	struct filesystem * next;
 } filesystem_t;

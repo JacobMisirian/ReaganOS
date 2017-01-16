@@ -61,7 +61,8 @@ static void interpretCmd (const char * cmd) {
 				textscreen_termSetBColor (col);
 			}
 		}
-	} else if (strcmp (out, "fcol") == 0) {
+	}
+	else if (strcmp (out, "fcol") == 0) {
 		if (strsplit (cmd, ' ', out) == NULL) {
 			char temp [10];
 			printf ("Current fcol: %s\n", vgaToStr (textscreen_termGetFColor (), temp));
