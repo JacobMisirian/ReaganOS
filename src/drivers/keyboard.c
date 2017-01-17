@@ -46,16 +46,21 @@ static const uint8_t kbdus [128] = {
 
 static uint8_t buffer;
 static size_t count = 0;
+static size_t shiftPressed = 0;
 
 void keyboard_handler (registers_t * r) {
 	uint8_t key = inportb (0x60);
+	if (key == 42 || key == 54) {
+		shiftPressed = 1;
+	} else if (key == 128 + 42 || key == 128 + 54) {
+		shiftPressed = 0;
+	}
 	buffer = key;
 	count++;
 }
 
 uint8_t keyboard_readKey () {
 	size_t cur = count;
-	
 	while (cur == count) ;
 	count = 0;
 	return buffer;
@@ -92,7 +97,16 @@ keyEvent_t * keyboard_scancodeToKeyEvent (uint8_t key) {
 	}
 	keyEvent_t * res = 0;
 	res->keyChar = kbdus [key];
+	res->keyCharShift = res->keyChar;
 	res->pressType = pressType;
+	
+	if (shiftPressed == 1) {
+		char temp [2];
+		temp [0] = res->keyChar;
+		temp [1] = 0;
+		strup (temp);
+		res->keyCharShift = temp [0];
+	}
 	
 	return res;
 }

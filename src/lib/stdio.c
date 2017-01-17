@@ -38,15 +38,17 @@ char * readLine (char * dest) {
 				}
 				continue;
 			}
+			if (press->keyChar == 0) {
+				continue;
+			}
 			
-			textscreen_termWriteChar (press->keyChar);
+			printf ("%c", press->keyCharShift);
 
-			
 			if (press->keyChar == '\n') {
 				dest [index] = 0;
 				return dest;
 			} else {
-				dest [index++] = press->keyChar;
+				dest [index++] = press->keyCharShift;
 			}
 		}
 	}
