@@ -79,7 +79,6 @@ static void interpretCmd (const char * cmd) {
 	else if (strcmp (out, "ls") == 0) {
 		fileEntry_t * file = heap_alloc (sizeof (fileEntry_t));
 		file->pos = 0;
-		
 		while (file->pos != -1) {
 			printf ("%s ", vfs_getFileListing (curDir, file));
 		}
