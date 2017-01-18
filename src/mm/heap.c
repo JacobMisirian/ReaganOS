@@ -53,7 +53,6 @@ void * heap_alloc (size_t bytes) {
 			usedTemp->next = NULL;
 			usedTemp->ptr = ptr;
 			usedTemp->size = bytes;
-			break;
 		}
 		if (usedTemp->next == NULL) {
 			usedTemp->next = heap_internalAlloc (sizeof (node_t));
@@ -61,7 +60,6 @@ void * heap_alloc (size_t bytes) {
 			usedTemp->next->pre = usedTemp;
 			usedTemp->next->ptr = ptr;
 			usedTemp->next->size = bytes;
-			break;
 		}
 		usedTemp = usedTemp->next;
 	}
@@ -84,7 +82,6 @@ int heap_free (void * ptr) {
 					freeTemp->pre = NULL;
 					freeTemp->ptr = ptr;
 					freeTemp->size = usedTemp->size;
-					return 0;
 				}
 				if (freeTemp->next == NULL) {
 					freeTemp->next = heap_internalAlloc (sizeof (node_t));
@@ -92,7 +89,6 @@ int heap_free (void * ptr) {
 					freeTemp->next->pre = freeTemp;
 					freeTemp->next->ptr = ptr;
 					freeTemp->next->size = usedTemp->size;
-					return 0;
 				}
 				freeTemp = freeTemp->next;
 			}
@@ -107,6 +103,6 @@ int heap_free (void * ptr) {
 
 static void * heap_internalAlloc (size_t bytes) {
 	void * pointer = nextPtr;
-	nextPtr += bytes;
+	nextPtr -= bytes;
 	return pointer;
 }
