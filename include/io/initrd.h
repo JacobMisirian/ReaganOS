@@ -17,6 +17,6 @@ typedef struct {
 
 void initrd_init (multiboot_info_t * multibootinfo);
 stream_t * initrd_openFile (const char * name);
-fileEntry_t * initrd_getFileListing (const char * path);
+fileEntry_t * initrd_getFileListing (const char * path, fileEntry_t * entry);
 
 #endif

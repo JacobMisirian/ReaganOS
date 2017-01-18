@@ -28,7 +28,7 @@ void * heap_alloc (size_t bytes) {
 	void * ptr = NULL;
 	
 	node_t * freeTemp = freeHead;
-	while (freeTemp->next != NULL) {
+	while (freeTemp != NULL) {
 		if (freeTemp->size >= bytes) {
 			ptr = freeTemp->ptr;
 			freeTemp->next->pre = freeTemp->pre;
@@ -73,6 +73,7 @@ int heap_free (void * ptr) {
 			freeTemp->next->size = usedTemp->size;
 			return 0;
 		}
+		usedTemp = usedTemp->next;
 	}
 	return -1;
 }

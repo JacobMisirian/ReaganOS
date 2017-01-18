@@ -46,13 +46,13 @@ int vfs_fileExists (const char * path) {
 	filesystem_t * fs = findFS (path);
 	return fs->fileExists (path + strlen (fs->root));
 }
-dirEntry_t * vfs_getDirListing (const char * path) {
+dirEntry_t * vfs_getDirListing (const char * path, dirEntry_t * entry) {
 	filesystem_t * fs = findFS (path);
-	return fs->getDirListing (path + strlen (fs->root));
+	return fs->getDirListing (path + strlen (fs->root), entry);
 }
-fileEntry_t * vfs_getFileListing (const char * path) {
+fileEntry_t * vfs_getFileListing (const char * path, fileEntry_t * entry) {
 	filesystem_t * fs = findFS (path);
-	return fs->getFileListing (path + strlen (fs->root));
+	return fs->getFileListing (path + strlen (fs->root), entry);
 }
 stream_t * vfs_openFile (const char * path) {
 	filesystem_t * fs = findFS (path);

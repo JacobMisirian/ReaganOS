@@ -67,22 +67,22 @@ stream_t * initrd_openFile (const char * name) {
 	return stream_memstreamInit (file->ptr, file->len);
 }
 
-fileEntry_t * initrd_getFileListing (const char * path) {
-	fileEntry_t * fileHead = heap_alloc (sizeof (fileEntry_t));
-	memset (0, fileHead, sizeof (fileEntry_t));
-	fileEntry_t * entry = fileHead;
-	
+fileEntry_t * initrd_getFileListing (const char * path, fileEntry_t * entry) {
+	int file = entry->pos++;
 	initrdFile_t * temp = head;
-	while (temp != NULL) {
-		strcpy (temp->name, entry->name);
-		
-		entry->next = heap_alloc (sizeof (fileEntry_t));
-		entry = entry->next;
-		memset (0, entry, sizeof (fileEntry_t));
-		
+	
+	size_t i = 0;
+	while (1) {
+		if (temp == NULL) {
+			entry->pos = -1;
+			return entry;
+		}
+		if (i++ == file) {
+			strcpy (temp->name, entry->name);
+			return entry;
+		}
 		temp = temp->next;
 	}
-	return fileHead;
 }
 
 static initrdFile_t * getInitrdFile (const char * name) {
